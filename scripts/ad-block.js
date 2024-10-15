@@ -20,9 +20,7 @@ const COMMANDS = {
   },
 };
 
-main();
-
-function main() {
+(function main() {
   execute();
 
   const observer = new MutationObserver((mutations) => {
@@ -37,7 +35,7 @@ function main() {
     childList: true,
     subtree: true,
   });
-}
+})();
 
 function execute() {
   BLOCKED_LIST.forEach((blocked) => {
