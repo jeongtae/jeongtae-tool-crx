@@ -1,10 +1,11 @@
 (function main() {
   if (!isGitHubPage()) return;
 
-  injectStyle();
+  injectStyles();
+  bindEvents();
 })();
 
-function injectStyle() {
+function injectStyles() {
   const style = document.createElement("style");
   style.id = "mintool-github-style";
 
@@ -17,6 +18,24 @@ function injectStyle() {
   document.head.appendChild(style);
 }
 
+function bindEvents() {
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) return;
+
+    if (isPullsPage()) {
+      refresh();
+    }
+  });
+}
+
+function refresh() {
+  location.reload();
+}
+
 function isGitHubPage() {
   return location.hostname === "github.com";
+}
+
+function isPullsPage() {
+  return location.pathname.includes("/pulls");
 }
