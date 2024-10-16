@@ -12,13 +12,13 @@
   },
   "content_scripts": [
     {
-      "js": ["lib/window.js"],
+      "js": ["lib/global.js"],
       "matches": ["<all_urls>"],
       "world": "MAIN",
       "run_at": "document_start"
     },
     {
-      "js": ["lib/components.js", "lib/log.js"],
+      "js": ["lib/global.js", "lib/components.js", "lib/log.js"],
       "matches": ["<all_urls>"]
     },
     {

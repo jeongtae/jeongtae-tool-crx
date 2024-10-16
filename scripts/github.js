@@ -73,7 +73,7 @@ async function addNotificationFilters() {
 
     if (!count) return;
 
-    const id = `custom-filter-${selector}`;
+    const id = `custom-filter-${filter.selector}`;
 
     const currentFilter = filtersList.querySelector(`#${id}`);
     const newFilter = newFilterButton({
