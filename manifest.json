@@ -18,7 +18,12 @@
       "run_at": "document_start"
     },
     {
-      "js": ["lib/global.js", "lib/components.js", "lib/log.js"],
+      "js": [
+        "lib/global.js",
+        "lib/components.js",
+        "lib/log.js",
+        "lib/wait-for-element.js"
+      ],
       "matches": ["<all_urls>"]
     },
     {

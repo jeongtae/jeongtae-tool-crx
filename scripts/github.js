@@ -7,6 +7,13 @@
   addNotificationFiltersAttachEvent();
 
   addNotificationFilters();
+
+  /**************************************************/
+  /*                                                */
+  /* shortcut                                       */
+  /*                                                */
+  /**************************************************/
+  addCommentShortcuts();
 })();
 
 function injectStyles() {
@@ -89,6 +96,89 @@ async function addNotificationFilters() {
       filtersList.appendChild(newFilter);
     }
   });
+}
+
+function addCommentShortcuts() {
+  let currentComment = null;
+  const timeout = 10_000;
+
+  const issueCommentClass = ".js-timeline-progressive-focus-container";
+  const threeDotButtonClass = ".details-overlay";
+  const editButtonClass = ".js-comment-edit-button";
+  const cancelButtonClass = ".js-comment-cancel-button";
+
+  const COMMANDS = {
+    cmdShiftE: {
+      keyPressed: (e) =>
+        (e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "e",
+      handler: (currentComment) => {
+        const threeDotButton =
+          currentComment.querySelector(threeDotButtonClass);
+        if (!threeDotButton) return;
+
+        threeDotButton.open = "true";
+        const targetSelector = editButtonClass;
+
+        waitForElement(threeDotButton, targetSelector, timeout).then(
+          (element) => {
+            element.click();
+          }
+        );
+      },
+    },
+    esc: {
+      keyPressed: (e) => e.key.toLowerCase() === "escape",
+      handler: (currentComment) => {
+        const threeDotButton =
+          currentComment.querySelector(threeDotButtonClass);
+        if (!threeDotButton) return;
+
+        threeDotButton.open = "";
+
+        const cancelButton = currentComment.querySelector(cancelButtonClass);
+        if (!cancelButton) return;
+
+        cancelButton.click();
+      },
+    },
+  };
+
+  document.addEventListener("click", (e) => {
+    const comment = e.target.closest(issueCommentClass);
+    if (!comment) return;
+
+    currentComment = comment;
+    glow(currentComment);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!currentComment) return;
+
+    const command = Object.entries(COMMANDS).find(([_, cmd]) =>
+      cmd.keyPressed(e)
+    );
+    if (!command) return;
+
+    const [_, { handler }] = command;
+    handler(currentComment);
+  });
+
+  function glow(element) {
+    setTimeout(() => {
+      element.style.transition = "box-shadow 0.3s ease-in-out";
+      element.style.boxShadow = "0 0 8px 2px blueviolet";
+
+      setTimeout(() => {
+        element.style.boxShadow = "0 0 0 0 blueviolet";
+
+        // Clean up styles after animation
+        setTimeout(() => {
+          element.style.transition = "";
+          element.style.boxShadow = "";
+        }, 300);
+      }, 900);
+    }, 0);
+  }
 }
 
 ///////////////////////////////////////////////
