@@ -14,6 +14,8 @@
   /*                                                */
   /**************************************************/
   addCommentShortcuts();
+
+  addPullRequestCommitCopyShortcuts();
 })();
 
 function injectStyles() {
@@ -245,5 +247,32 @@ async function waitForDomLoaded() {
     }
 
     window.addEventListener("load", resolve);
+  });
+}
+
+function addPullRequestCommitCopyShortcuts() {
+  addEventListener("keydown", (e) => {
+    if (
+      !(e.metaKey && e.shiftKey && e.altKey && e.key === "Ç") ||
+      (!/^\/grepp\/[^/]+\/pull\/\d+$/.test(location.pathname) &&
+        !/^\/grepp\/[^/]+\/compare\/[^/]+$/.test(location.pathname))
+    ) {
+      return;
+    }
+
+    e.preventDefault();
+
+    navigator.clipboard.writeText(
+      Array.from(
+        document.querySelectorAll(
+          '.Link--primary[href*="/commit/"],.Link--secondary[href*="/commits/"][title]'
+        )
+      )
+        .filter((el) => !el.textContent.startsWith("Merge branch"))
+        .map((el, idx) => `${idx + 1}. **[${el.textContent}](${el.href})**`)
+        .join("\n\n    .\n\n")
+    );
+
+    alert("커밋 링크 복사완료");
   });
 }
