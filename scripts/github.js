@@ -279,7 +279,15 @@ function addPullRequestCommitCopyShortcuts() {
   });
 }
 
-const REVIEWERS = ["arclien", "bobyunki", "datalater", "ghyeon0", "shinkeonkim", "theo-song"];
+const REVIEWERS = [
+  "arclien",
+  "Beomjun",
+  "bobyunki",
+  "datalater",
+  "ghyeon0",
+  "shinkeonkim",
+  "theo-song",
+];
 function addFillPullRequestTemplateShortcuts() {
   addEventListener("keydown", async (e) => {
     if (
