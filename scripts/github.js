@@ -16,6 +16,8 @@
   addCommentShortcuts();
 
   addPullRequestCommitCopyShortcuts();
+
+  addFillPullRequestTemplateShortcuts();
 })();
 
 function injectStyles() {
@@ -274,5 +276,42 @@ function addPullRequestCommitCopyShortcuts() {
     );
 
     alert("커밋 링크 복사완료");
+  });
+}
+
+const REVIEWERS = ["arclien", "bobyunki", "datalater", "ghyeon0", "shinkeonkim", "theo-song"];
+function addFillPullRequestTemplateShortcuts() {
+  addEventListener("keydown", async (e) => {
+    if (
+      !(e.metaKey && e.shiftKey && e.altKey && e.key === "˛") ||
+      !/^\/grepp\/[^/]+\/compare\/[^/]+$/.test(location.pathname) ||
+      !confirm("풀 리퀘스트 템플릿을 채우시겠습니까?")
+    ) {
+      return;
+    }
+
+    e.preventDefault();
+
+    const ticketNumber = location.pathname.match(/(?<=\.\.\.)\w+-\d+/)[0];
+
+    // PR 제목 바꾸기
+    const titleInput = document.querySelector(".discussion-topic-header input");
+    if (/^[A-Z][a-z]{2,} \d+ /.test(titleInput.value)) {
+      titleInput.value = `[${ticketNumber}] `;
+    }
+
+    // Reviewers 열기
+    document.querySelector('#reviewers-select-menu [role="button"]').click();
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // 리뷰어 모두 선택
+    Array.from(document.querySelectorAll('#reviewers-select-menu [role="menuitemcheckbox"]'))
+      .filter((el) => REVIEWERS.includes(el.querySelector(".js-username").textContent))
+      .forEach((el) => {
+        el.click();
+      });
+
+    // 어사이니 선택
+    document.querySelector(".js-issue-assign-self")?.click();
   });
 }
