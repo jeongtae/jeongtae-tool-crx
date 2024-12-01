@@ -1,5 +1,10 @@
 const BLOCKED_LIST = [
   {
+    selectors: [".google-auto-placed", ".revenue_unit_wrap", ".adsbygoogle"],
+    origin: "", // tistory
+    command: "remove",
+  },
+  {
     selectors: [".spacing_log_question_page_ad"],
     origin: "https://www.quora.com",
     command: "display: none",
