@@ -3,7 +3,6 @@
 
   injectStyles();
 
-  addAutoRefreshEvent();
   addNotificationFiltersAttachEvent();
 
   addNotificationFilters();
@@ -31,20 +30,6 @@ function injectStyles() {
   `;
 
   document.head.appendChild(style);
-}
-
-function addAutoRefreshEvent() {
-  if (!(isPullsPage() || isNotificationPage())) return;
-
-  if (document.body.dataset.autoRefreshEventBound) return;
-  document.body.dataset.autoRefreshEventBound = true;
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) return;
-
-    showToast("Page refreshed", 2000);
-    refresh();
-  });
 }
 
 function addNotificationFiltersAttachEvent() {
@@ -231,10 +216,6 @@ function refresh() {
 
 function isGitHubPage() {
   return location.hostname === "github.com";
-}
-
-function isPullsPage() {
-  return location.pathname.includes("/pulls");
 }
 
 function isNotificationPage() {
