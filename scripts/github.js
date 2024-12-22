@@ -285,9 +285,7 @@ function addFillPullRequestTemplateShortcuts() {
 
     // PR 제목 바꾸기
     const titleInput = document.querySelector(".discussion-topic-header input");
-    if (/^[A-Z][a-z]{2,} \d+ /.test(titleInput.value)) {
-      titleInput.value = `[${ticketNumber}] `;
-    }
+    titleInput.value = titleInput.value.replace(/^[A-Z][a-z]{2,} \d+/, `[${ticketNumber}]`);
 
     // Reviewers 열기
     document.querySelector('#reviewers-select-menu [role="button"]').click();
