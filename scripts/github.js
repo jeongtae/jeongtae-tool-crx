@@ -236,7 +236,7 @@ async function waitForDomLoaded() {
 function addPullRequestCommitCopyShortcuts() {
   addEventListener("keydown", (e) => {
     if (
-      !(e.metaKey && e.shiftKey && e.altKey && e.key === "Ç") ||
+      !(e.metaKey && e.shiftKey && e.altKey && e.code === "KeyC") ||
       (!/^\/grepp\/[^/]+\/pull\/\d+$/.test(location.pathname) &&
         !/^\/grepp\/[^/]+\/compare\/[^/]+$/.test(location.pathname))
     ) {
@@ -272,7 +272,7 @@ const REVIEWERS = [
 function addFillPullRequestTemplateShortcuts() {
   addEventListener("keydown", async (e) => {
     if (
-      !(e.metaKey && e.shiftKey && e.altKey && e.key === "˛") ||
+      !(e.metaKey && e.shiftKey && e.altKey && e.code === "KeyX") ||
       !/^\/grepp\/[^/]+\/compare\/[^/]+$/.test(location.pathname) ||
       !confirm("풀 리퀘스트 템플릿을 채우시겠습니까?")
     ) {
