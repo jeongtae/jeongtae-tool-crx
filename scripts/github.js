@@ -281,7 +281,7 @@ function addFillPullRequestTemplateShortcuts() {
 
     e.preventDefault();
 
-    const ticketNumber = location.pathname.match(/(?<=\.\.\.)\w+-\d+/)[0];
+    const ticketNumber = location.pathname.match(/(?<=(\.\.\.|compare\/))\w+-\d+/)[0];
 
     // PR 제목 바꾸기
     const titleInput = document.querySelector(".discussion-topic-header input");
