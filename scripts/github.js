@@ -266,7 +266,6 @@ const REVIEWERS = [
   "bobyunki",
   "datalater",
   "ghyeon0",
-  "shinkeonkim",
   "theo-song",
 ];
 function addFillPullRequestTemplateShortcuts() {
